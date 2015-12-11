@@ -1,17 +1,17 @@
 'use strict';
 
-var express = require('express');
+let express = require('express');
 
-var app = express();
+let app = express();
 
-var port = process.env.PORT || 3000;
+let port = process.env.PORT || 3000;
 
 //static resources directories§
 app.use(express.static('public'));
 app.use(express.static('src/views'));
 
 app.get('/', function serve(req, res) {
-	res.send('Hello NI');
+	res.send('Hello');
 });
 
 app.listen(port, function init(err) {

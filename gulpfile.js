@@ -9,7 +9,7 @@ var unitTestFiles = 'tests/**/*.js';
 
 gulp.task('coding-standards', function defineCodingStandards() {
 	return gulp.src(jsFiles)
-		.pipe(jshint())
+		.pipe(jshint({esnext: true}))
 		.pipe(jshint.reporter('jshint-stylish', {
 			verbose: true
 		}));
