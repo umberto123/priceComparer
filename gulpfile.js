@@ -23,18 +23,21 @@ gulp.task('coding-style', function defineCodingStyle() {
 });
 
 gulp.task('unit-tests', function unitTest() {
+	// return gulp.src(unitTestFiles, {read: false})
+	// 	.pipe(mocha({reporter: 'nyan'}))
+ //        .once('error', function testError() {
+ //            process.exit(1);
+ //        })
+ //        .once('end', function testEnd() {
+ //            process.exit();
+ //        });
 	return gulp.src(unitTestFiles, {read: false})
-		.pipe(mocha({reporter: 'nyan'}))
-        .once('error', function testError() {
-            process.exit(1);
-        })
-        .once('end', function testEnd() {
-            process.exit();
-        });
+        // gulp-mocha needs filepaths so you can't have any plugins before it
+        .pipe(mocha({reporter: 'nyan'}));
 });
 
-gulp.task('serve', ['coding-standards', 'coding-style'], function serve() {
-	gulp.watch(jsFiles, ['coding-standards', 'coding-style', 'unit-tests']);
+gulp.task('serve', ['coding-standards', 'coding-style', 'unit-tests'], function serve() {
+	//gulp.watch(jsFiles, ['coding-standards', 'coding-style', 'unit-tests']);
 
 	var options = {
 		script: 'app.js',
@@ -43,10 +46,12 @@ gulp.task('serve', ['coding-standards', 'coding-style'], function serve() {
 			// 'PORT': 5000
 			// 'dbConnection': ...
 		},
+		tasks: ['coding-standards', 'coding-style', 'unit-tests'],
 		watch: jsFiles
 	};
 
 	return nodemon(options).on('restart', function res() {
-		//console.log('restarting server......');
+		console.log('restarting server......');
+
 	});
 });
