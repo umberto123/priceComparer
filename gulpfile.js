@@ -6,6 +6,9 @@ var mocha = require('gulp-mocha');
 
 var jsFiles = ['*.js', 'src/**/*.js'];
 var unitTestFiles = 'tests/**/*.js';
+var systemTestFiles = 'tests/system/**/*.js';
+var e2eTestFiles = 'tests/end2end/**/*.js';
+var integrationTestFiles = 'tests/integration/**/*.js';
 
 gulp.task('coding-standards', function defineCodingStandards() {
 	return gulp.src(jsFiles)
@@ -22,21 +25,23 @@ gulp.task('coding-style', function defineCodingStyle() {
 		.pipe(jscs.reporter('fail'));
 });
 
-gulp.task('unit-tests', function unitTest() {
-	// return gulp.src(unitTestFiles, {read: false})
-	// 	.pipe(mocha({reporter: 'nyan'}))
- //        .once('error', function testError() {
- //            process.exit(1);
- //        })
- //        .once('end', function testEnd() {
- //            process.exit();
- //        });
-	return gulp.src(unitTestFiles, {read: false})
-        // gulp-mocha needs filepaths so you can't have any plugins before it
+//API with dev-ops
+gulp.task('unit-test', function unitTests() {
+	return gulp.src([].concat(unitTestFiles, systemTestFiles), {read: false})
+		.pipe(mocha({reporter: 'nyan'}));
+});
+
+gulp.task('integration-test', function integrationTests() {
+	return gulp.src([].concat(integrationTestFiles), {read: false})
         .pipe(mocha({reporter: 'nyan'}));
 });
 
-gulp.task('serve', ['coding-standards', 'coding-style', 'unit-tests'], function serve() {
+gulp.task('e2e-test', function e2eTests() {
+	return gulp.src([].concat(e2eTestFiles), {read: false})
+        .pipe(mocha({reporter: 'nyan'}));
+});
+
+gulp.task('serve', ['coding-standards', 'coding-style', 'unit-test'], function serve() {
 	//gulp.watch(jsFiles, ['coding-standards', 'coding-style', 'unit-tests']);
 
 	var options = {
@@ -46,7 +51,7 @@ gulp.task('serve', ['coding-standards', 'coding-style', 'unit-tests'], function 
 			// 'PORT': 5000
 			// 'dbConnection': ...
 		},
-		tasks: ['coding-standards', 'coding-style', 'unit-tests'],
+		tasks: ['coding-standards', 'coding-style', 'unit-test'],
 		watch: jsFiles
 	};
 
