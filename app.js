@@ -1,10 +1,11 @@
 'use strict';
 
-let express = require('express');
+var config = require('./lib/config').init();
 
-let app = express();
+var express = require('express');
+var app = express();
 
-let port = process.env.PORT || 3000;
+var port = process.env.PORT || 3000;
 
 //static resources directories§
 app.use(express.static('public'));

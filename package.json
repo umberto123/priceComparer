@@ -12,7 +12,9 @@
   "dependencies": {
     "chai-as-promised": "^5.2.0",
     "chai-http": "^1.0.0",
-    "express": "^4.13.3"
+    "express": "^4.13.3",
+    "lodash": "^4.0.0",
+    "nconf": "^0.8.2"
   },
   "devDependencies": {
     "babel": "^6.3.13",
